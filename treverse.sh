@@ -4,10 +4,6 @@ read url_check
 printf "Enter file name to log fetched urls: "
 read gau_fetched_file
 gau -o $gau_fetched_file $url_check
-echo "stored: $pwd/$gau_fetched_file"
-blankspace=""
-http="http://"
-https="https://"
 sed -i 's|http://||g' $gau_fetched_file 
 sed -i 's|https://||g' $gau_fetched_file 
 cat $gau_fetched_file | httprobe | tee live_links_$gau_fetched_file
@@ -25,22 +21,20 @@ while true
 do
 	echo
  	read -r -p "[~] Do you wants to take screenshot and report using EyeWitness? [Y/n] " input
- 
-	 case $input in
-	     [yY][eE][sS]|[yY])
+	case $input in
+	    [yY][eE][sS]|[yY])
 		EyeWitness_func
+	break
+	;;
+	    [nN][oO]|[nN])
 
-	 break
-	 ;;
-	     [nN][oO]|[nN])
-
-	 echo -e "[+] File fetched with gau         : $url_check"
-	 echo -e "[+] File fetched with httprobe 	: live_links_$gau_fetched_file"
-	 break
-	        ;;
+	echo -e "[+] File fetched with gau      : $url_check"
+	echo -e "[+] File fetched with httprobe : live_links_$gau_fetched_file"
+	break
+	       ;;
 	     *)
-	 echo "[*] Invalid input..."
-	 ;;
-	 esac
+	echo "[*] Invalid input..."
+	;;
+	esac
 done
 
